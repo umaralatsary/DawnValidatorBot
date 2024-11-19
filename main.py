@@ -7,12 +7,37 @@ import telegram
 from concurrent.futures import ThreadPoolExecutor
 from urllib.parse import urlparse
 import colorlog
+from colorama import init, Fore, Back, Style
 from fake_useragent import UserAgent
 import urllib3
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from asyncio import Queue
 import itertools
+
+banner = """
+==================================================================
+ █████╗ ██╗██████╗ ██████╗ ██████╗  ██████╗ ██████╗ 
+██╔══██╗██║██╔══██╗██╔══██╗██╔══██╗██╔═══██╗██╔══██╗
+███████║██║██████╔╝██║  ██║██████╔╝██║   ██║██████╔╝
+██╔══██║██║██╔══██╗██║  ██║██╔══██╗██║   ██║██╔═══╝ 
+██║  ██║██║██║  ██║██████╔╝██║  ██║╚██████╔╝██║     
+╚═╝  ╚═╝╚═╝╚═╝  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝     
+                                                    
+██╗███╗   ██╗███████╗██╗██████╗ ███████╗██████╗     
+██║████╗  ██║██╔════╝██║██╔══██╗██╔════╝██╔══██╗    
+██║██╔██╗ ██║███████╗██║██║  ██║█████╗  ██████╔╝    
+██║██║╚██╗██║╚════██║██║██║  ██║██╔══╝  ██╔══██╗    
+██║██║ ╚████║███████║██║██████╔╝███████╗██║  ██║    
+╚═╝╚═╝  ╚═══╝╚══════╝╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝    
+
+Join our Telegram channel for the latest updates: t.me/airdropinsiderid
+
+DAWN AUTO BOT - Airdrop Insider
+==================================================================
+"""
+print(banner)
+time.sleep(1)
 
 CONFIG_FILE = "config.json"
 PROXY_FILE = "proxies.txt"

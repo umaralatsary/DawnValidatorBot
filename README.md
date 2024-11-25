@@ -27,10 +27,12 @@
 
 [*MY CHANNEL*](https://t.me/AirdropInsiderID)
 
+## Dawn Validator Bot with Multiprocessing Workers
+
 ## How To Use
 1.  Clone Repo
     ```
-    git clone https://github.com/vinskasenda/DawnValidatorBot.git
+    git clone https://github.com/airdropinsider/DawnValidatorBot.git
     ```
 2.  Move to Directory
     ```
@@ -40,13 +42,31 @@
     ```
     pip install -r requirements.txt
     ```
-4.  Fill Email and Bearer Token
+4.  Fill Telegram Token, Email and Bearer Token
     ```
     nano config.json
     ```
+    Config For Multiple Accounts
+```
+  "accounts": [
+    {
+      "email": "YOUR DAWN VALIDATOR EMAIL",
+      "token": "YOUR BEARER TOKEN"
+    },
+    {
+      "email": "YOUR DAWN VALIDATOR EMAIL",
+      "token": "YOUR BEARER TOKEN"
+    }
+```
 5.  Run Bot
     ```
-    python3 main.py
+    # Termux
+    python main.py # default 3 worker
+    python main.py -w 10 # optional, 10 is amount of workers
+
+    # Linux / CMD
+    python3 main.py # default 3 worker
+    python3 main.py -w 10 # optional, 10 is amount of workers
     ```
 # How To Find Your Bearer Token
 

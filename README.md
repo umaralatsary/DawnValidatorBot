@@ -44,9 +44,10 @@
     ```
 4.  Fill Telegram Token, Email and Bearer Token
     ```
-    nano config.json```
-    Config For Multiple Accounts
+    nano config.json
     ```
+    Config For Multiple Accounts
+     ```
   "accounts": [
     {
       "email": "YOUR DAWN VALIDATOR EMAIL",
@@ -55,7 +56,8 @@
     {
       "email": "YOUR DAWN VALIDATOR EMAIL",
       "token": "YOUR BEARER TOKEN"
-    }```
+    }
+     ```
 5.  Run Bot
     ```
     # Termux

@@ -58,6 +58,7 @@
       "token": "YOUR BEARER TOKEN"
     }
      ```
+
 5.  Run Bot
     ```
     # Termux

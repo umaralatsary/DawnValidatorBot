@@ -44,8 +44,7 @@
     ```
 4.  Fill Telegram Token, Email and Bearer Token
     ```
-    nano config.json
-    ```
+    nano config.json```
     Config For Multiple Accounts
     ```
   "accounts": [

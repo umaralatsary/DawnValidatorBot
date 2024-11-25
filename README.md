@@ -56,8 +56,7 @@
     {
       "email": "YOUR DAWN VALIDATOR EMAIL",
       "token": "YOUR BEARER TOKEN"
-    }
-    ```
+    }```
 5.  Run Bot
     ```
     # Termux

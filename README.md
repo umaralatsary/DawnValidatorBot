@@ -1,4 +1,4 @@
-## DAWN VALIDATOR BOT
+# DAWN VALIDATOR BOT
 1. Download DAWN Extension: DOWNLOAD (https://chromewebstore.google.com/detail/dawn-validator-chrome-ext/fpdkjdnhkakefebpekbdhillbhonfjjp)
 2. Input email dan wajib menggunakan invite code. 
 3. Invite code
@@ -9,7 +9,7 @@
 5. Selesain task buat dapet tambahan 15k point
 6. Stay connect biar tetep dapetin DAWN point.
 
-## Join My Telegram Channel
+# Join My Telegram Channel
 
         █████╗ ██╗██████╗ ██████╗ ██████╗  ██████╗ ██████╗ 
        ██╔══██╗██║██╔══██╗██╔══██╗██╔══██╗██╔═══██╗██╔══██╗

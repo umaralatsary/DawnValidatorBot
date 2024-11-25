@@ -341,53 +341,43 @@ class AccountWorker:
                 await asyncio.sleep(poll_interval)
 
     async def process_account(self, account):
-        email = account["email"]
-        token = account["token"]
-        
-        headers = { 
-            "Authorization": f"Bearer {token}",
-            "Content-Type": "application/json",
-            "User-Agent": ua.random
-        }
+    email = account["email"]
+    token = account["token"]
 
-        session, self.proxy_queue = create_session(self.proxy_queue)
-        try:
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+        "User-Agent": ua.random
+    }
+
+    session, self.proxy_queue = create_session(self.proxy_queue)
+    try:
+        success_count = 0
+        fail_count = 0
+        max_retries = 10
+        
+        for retry in range(max_retries):
             success, status_message = await keep_alive(headers, email, session)
-                if success:
-                    points = await total_points(headers, session)
-                    message = (
-                        "✅ *🌟 Success Notification 🌟* ✅\n\n"
-                        f"👤 *Account:* {email}\n\n"
-                        f"💰 *Points Earned:* {points}\n\n"
-                        f"📢 *Message:* {status_message}\n\n"
-                        f"🛠️ *Proxy Used:* {proxy}\n\n"
-                        "🤖 *Bot made by https://t.me/AirdropInsiderID*"
-                    )
-                    await telegram_message(message)
-                    logging.info(f"Worker {self.worker_id} - Account {email}: Success")
-                    self.stats["success"] += 1
-                    success_count += 1
-                    if success_count >= 1:
-                        return True
-                else:
-                    logging.error(f"Worker {self.worker_id} - Failed keep alive for {email}. Retry {retry+1}/{max_retries}")
-                    fail_count += 1
-                    if fail_count >= 10:
-                        self.stats["failed"] += 1
-                        message = (
-                            "⚠️ *Failure Notification* ⚠️\n\n"
-                            f"👤 *Account:* {email}\n\n"
-                            "❌ *Status:* Keep Alive Failed\n\n"
-                            "⚙️ *Action Required:* Please check account status.\n\n"
-                            "🤖 *Bot made by https://t.me/AirdropInsiderID*"
-                        )
-                        await telegram_message(message)
-                        break
-            
-            except Exception as e:
-                logging.error(f"Worker {self.worker_id} - Error processing {email}: {str(e)}")
+            if success:
+                points = await total_points(headers, session)
+                message = (
+                    "✅ *🌟 Success Notification 🌟* ✅\n\n"
+                    f"👤 *Account:* {email}\n\n"
+                    f"💰 *Points Earned:* {points}\n\n"
+                    f"📢 *Message:* {status_message}\n\n"
+                    f"🛠️ *Proxy Used:* {session.proxies['http'].split('://')[1]}\n\n"
+                    "🤖 *Bot made by https://t.me/AirdropInsiderID*"
+                )
+                await queue_telegram_message(message)
+                logging.info(f"Worker {self.worker_id} - Account {email}: Success")
+                self.stats["success"] += 1
+                success_count += 1
+                if success_count >= 1:
+                    return True
+            else:
+                logging.error(f"Worker {self.worker_id} - Failed keep alive for {email}. Retry {retry+1}/{max_retries}")
                 fail_count += 1
-                if fail_count >= 10:
+                if fail_count >= max_retries:
                     self.stats["failed"] += 1
                     message = (
                         "⚠️ *Failure Notification* ⚠️\n\n"
@@ -396,12 +386,26 @@ class AccountWorker:
                         "⚙️ *Action Required:* Please check account status.\n\n"
                         "🤖 *Bot made by https://t.me/AirdropInsiderID*"
                     )
-                    await telegram_message(message)
+                    await queue_telegram_message(message)
                     break
-            finally:
-            session.close()
-            self.proxy_queue.put(session.proxies['http'].split('://')[1])
-        return False
+    except Exception as e:
+        logging.error(f"Worker {self.worker_id} - Error processing {email}: {str(e)}")
+        fail_count += 1
+        if fail_count >= max_retries:
+            self.stats["failed"] += 1
+            message = (
+                "⚠️ *Failure Notification* ⚠️\n\n"
+                f"👤 *Account:* {email}\n\n"
+                "❌ *Status:* Keep Alive Failed\n\n"
+                "⚙️ *Action Required:* Please check account status.\n\n"
+                "🤖 *Bot made by https://t.me/AirdropInsiderID*"
+            )
+            await queue_telegram_message(message)
+            break
+    finally:
+        session.close()
+        self.proxy_queue.put(session.proxies['http'].split('://')[1])
+    return False
         
 async def keep_alive(headers, email, session):
     keepalive_payload = {

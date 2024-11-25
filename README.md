@@ -47,7 +47,7 @@
     nano config.json
     ```
 
-    Config For Multiple Accounts
+    example config for multiple accounts
     ```
     "accounts": [
     {

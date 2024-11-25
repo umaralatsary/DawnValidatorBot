@@ -353,7 +353,6 @@ class AccountWorker:
         session, self.proxy_queue = create_session(self.proxy_queue)
         try:
             success, status_message = await keep_alive(headers, email, session)
-
                 if success:
                     points = await total_points(headers, session)
                     message = (

@@ -49,7 +49,7 @@
 
     Config For Multiple Accounts
     ```
-  "accounts": [
+    "accounts": [
     {
       "email": "YOUR DAWN VALIDATOR EMAIL",
       "token": "YOUR BEARER TOKEN"
